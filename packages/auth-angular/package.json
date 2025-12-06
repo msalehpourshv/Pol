@@ -1,0 +1,21 @@
+{
+  "name": "@pol/auth-angular",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "peerDependencies": {
+    "@angular/common": "^17.0.0",
+    "@angular/core": "^17.0.0",
+    "@angular/router": "^17.0.0"
+  },
+  "dependencies": {
+    "@pol/auth-core": "^0.1.0",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
