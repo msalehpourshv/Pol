@@ -1,0 +1,17 @@
+{
+  "name": "pol-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "build": "pnpm -r run build",
+    "dev:root-config": "pnpm --filter @pol/root-config start",
+    "dev:public-portal": "pnpm --filter @pol/public-portal start",
+    "dev:mfe-base-angular": "pnpm --filter @pol/mfe-base-angular start",
+    "dev:mfe-sale-react": "pnpm --filter @pol/mfe-sale-react start"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}
