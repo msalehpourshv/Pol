@@ -1,5 +1,27 @@
 # Pol
 
+
+
+nx g @nx/js:lib libs/core/contracts --importPath=@pol/contracts --bundler=tsc
+
+nx g @nx/js:lib libs/core/service-proxy --importPath=@pol/service-proxy --bundler=tsc
+
+
+nx g @nxext/stencil:library ui-core --directory=libs/ui/ui-core
+
+nx g @nxext/stencil:make-lib-buildable ui-core
+
+nx g @nxext/stencil:add-outputtarget ui-core --outputType=angular
+
+nx g @nxext/stencil:add-outputtarget ui-core --outputType=react
+
+
+
+
+nx g @nxext/stencil:add-outputtarget libs/ui/ui-angular --outputType=angular --projectName=ui-core
+
+nx g @nxext/stencil:add-outputtarget libs/ui/ui-react --outputType=react --projectName=ui-core
+
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
 ✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.

@@ -1,0 +1,28 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@org/service-proxy": ["libs/core/service-proxy/src/index.ts"],
+      "@pol/contracts": ["libs/core/contracts/src/index.ts"],
+      "@pol/ui-core": ["dist/libs/ui/ui-core"],
+      "@pol/ui-core-angular": ["libs/ui/ui-core-angular/src/index.ts"],
+      "@pol/ui-core-react": ["libs/ui/ui-core-react/src/index.ts"],
+      "@pol/ui-core/*": ["dist/libs/ui/ui-core/dist/components/*"],
+      "@pol/ui-core/loader": ["dist/libs/ui/ui-core/loader"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

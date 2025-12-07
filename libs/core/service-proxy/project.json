@@ -1,0 +1,19 @@
+{
+  "name": "service-proxy",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/core/service-proxy/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/core/service-proxy",
+        "main": "libs/core/service-proxy/src/index.ts",
+        "tsConfig": "libs/core/service-proxy/tsconfig.lib.json",
+        "assets": ["libs/core/service-proxy/*.md"]
+      }
+    }
+  },
+  "tags": []
+}
