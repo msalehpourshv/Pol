@@ -7,9 +7,9 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@pol/design-tokens": "^0.1.0"
+    "@pol/design-tokens": "workspace:*"
   },
   "devDependencies": {
-    "typescript": "^5.4.5"
+    "typescript": "^5.9.3"
   }
 }

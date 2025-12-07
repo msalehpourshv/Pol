@@ -7,6 +7,6 @@
     "build": "tsc -p tsconfig.json && mkdir -p dist && cp src/tokens.css dist/tokens.css"
   },
   "devDependencies": {
-    "typescript": "^5.4.5"
+    "typescript": "^5.9.3"
   }
 }

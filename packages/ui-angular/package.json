@@ -11,9 +11,9 @@
     "@angular/core": "^17.0.0"
   },
   "dependencies": {
-    "@pol/ui-core": "^0.1.0"
+    "@pol/ui-core": "workspace:*"
   },
   "devDependencies": {
-    "typescript": "^5.4.5"
+    "typescript": "^5.9.3"
   }
 }

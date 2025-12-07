@@ -11,15 +11,15 @@
     "react-dom": "^18.2.0",
     "single-spa-react": "^5.0.3",
     "react-router-dom": "^6.22.3",
-    "@pol/ui-react": "^0.1.0",
-    "@pol/design-tokens": "^0.1.0",
-    "@pol/auth-core": "^0.1.0"
+    "@pol/ui-react": "workspace:*",
+    "@pol/design-tokens": "workspace:*",
+    "@pol/auth-core": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.2.79",
     "@types/react-dom": "^18.2.19",
     "ts-loader": "^9.5.1",
-    "typescript": "^5.4.5",
+    "typescript": "^5.9.3",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
