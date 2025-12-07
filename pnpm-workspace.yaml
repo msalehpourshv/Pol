@@ -1,9 +1,0 @@
-packages:
-  - apps/*
-  - packages/*
-
-ignoredBuiltDependencies:
-  - '@parcel/watcher'
-  - esbuild
-  - lmdb
-  - msgpackr-extract

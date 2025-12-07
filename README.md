@@ -1,144 +1,109 @@
----
-id: frontend-architecture
-title: معماری Frontend پروژه Pol
-sidebar_label: Frontend Architecture
-slug: /architecture/frontend
----
+# PolWorkspace
 
-# معماری Frontend پروژه **Pol** (POC)
+<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
-> کدنام: **Pol** (پل)
-> دامنه: سامانه سازمانی هلدینگ با چند کارخانه و چند شرکت بازرگانی / خدماتی
-> این سند، معماری POC برای لایه‌ی Frontend را تعریف می‌کند؛ به‌گونه‌ای که بتوان بر اساس آن، ساختار repository و کد پروژه را به صورت خودکار تولید کرد.
+✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
 
-***
+[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
 
-## 1. اهداف و محدودیت‌ها
+## Generate a library
 
-### 1.1. اهداف
-
-* پشتیبانی از چند **دامنه‌ی تجاری** (domain) در سطح هلدینگ (مثلاً: Base, Sale، و دامنه‌های بعدی).
-* امکان استفاده از **چند فریم‌ورک** در Frontend:
-  * Angular برای برخی دامنه‌ها (مثلاً `base`)
-  * React برای برخی دامنه‌ها (مثلاً `sale`)
-  * Vue برای دامنه‌های احتمالی آینده
-* یک **Portal / Shell** مشترک برای:
-  * مدیریت احراز هویت
-  * layout عمومی
-  * multi-tenant (انتخاب شرکت / کارخانه)
-* معماری قابل توسعه با **Micro Frontend**:
-  * هر دامنه‌ی تجاری \= یک Micro Frontend مستقل
-  * build و deploy مستقل
-* استفاده از **Shared Frontend Libraries** مبتنی بر TypeScript خالص:
-  * امکان استفاده در Angular / React / Vue
-* طراحی یک **Design System** مشترک:
-  * ظاهر یکسان در همه‌ی فریم‌ورک‌ها
-* طراحی یک **Auth SDK** قابل استفاده در تمام MFEها.
-
-### 1.2. محدوده‌ی POC
-
-در این POC، فقط دو دامنه‌ی اصلی پیاده‌سازی می‌شوند:
-
-* **`base` (Angular)**
-  * مدیریت تعاریف اصلی / موجودیت‌های عمومی (مثلاً Customer, Product, Warehouse, …)
-* **`sale` (React)**
-  * مدیریت فاکتور فروش:
-    * Header (مشتری، تاریخ، واحد پول، انبار، …)
-    * Detail (اقلام فاکتور: کالا، تعداد، قیمت، مالیات، …)
-
-همچنین:
-
-* یک لایه‌ی عمومی بدون احراز هویت (`public`) در دسترس است.
-* بخش `app` بعد از احراز هویت در دسترس است.
-
-***
-
-## 2. نمای کلی معماری Frontend
-
-### 2.1. اجزای اصلی
-
-معماری Frontend شامل این اجزا است:
-
-* **Root Config (`root-config`)**
-  * پیاده‌سازی شده با TypeScript خالص + [single-spa](https://single-spa.js.org/)
-  * مسئول:
-    * ثبت مایکروفرانت‌اندها (`registerApplication`)
-    * مدیریت انجام `mount/unmount` بر اساس URL
-* **Public Portal (`public-portal`)**
-  * بخش عمومی بدون نیاز به احراز هویت
-  * صفحات:
-    * صفحه‌ی اصلی عمومی
-    * صفحه‌ی ورود (login)
-    * صفحات اطلاع‌رسانی عمومی
-* **App Shell (`app-shell`)** *(در فاز بعد قابل اضافه شدن است؛ برای POC می‌تواند حذف یا ساده شود)*
-  * layout داخلی (header, sidebar, footer)
-  * نمایش مشترک context کاربر (نام، شرکت، کارخانه فعال، …)
-* **Micro Frontends per Domain**
-  * `mfe-base-angular` → دامنه‌ی Base (Angular)
-  * `mfe-sale-react` → دامنه‌ی Sale (React)
-* **Shared Frontend Libraries**
-  * `@pol/contracts`
-  * `@pol/api-client`
-  * `@pol/auth-core`, `@pol/auth-angular`, `@pol/auth-react`
-  * `@pol/design-tokens`, `@pol/ui-core`, `@pol/ui-angular`, `@pol/ui-react`
-
-### 2.2. تفکیک public و app
-
-* مسیرهای **عمومی (public)**:
-  * مثال: `/`, `/about`, `/login`, `/help`
-  * توسط مایکروفرانت‌اند `public-portal` مدیریت می‌شوند.
-  * بدون نیاز به access token.
-* مسیرهای **درون سیستم (app)**:
-  * مثال: `/app/base/...`, `/app/sale/...`
-  * فقط پس از احراز هویت در دسترس هستند.
-  * توسط MFEهای `mfe-base-angular` و `mfe-sale-react` مدیریت می‌شوند.
-  * هر MFE خودش مسئول بررسی احراز هویت (با استفاده از Auth SDK) است.
-
-در سطح `root-config`، مسیریابی به این شکل انجام می‌شود:
-
-* اگر `pathname` با `/app` شروع نشود ⇒ فعال شدن `public-portal`
-* اگر `pathname` با `/app/base` شروع شود ⇒ فعال شدن `mfe-base-angular`
-* اگر `pathname` با `/app/sale` شروع شود ⇒ فعال شدن `mfe-sale-react`
-
-***
-
-## 3. ساختار Monorepo
-
-### 3.1. ساختار پوشه‌ها
-
-ریپازیتوری GitHub: `Pol`
-ساختار پیشنهادی:
-
-```js
-Pol/
-  package.json
-  pnpm-workspace.yaml           # یا yarn workspaces
-  tsconfig.base.json
-  .editorconfig
-  .eslintrc.cjs
-  .prettierrc
-
-  apps/
-    root-config/                # single-spa root config (TS + webpack)
-    public-portal/              # MFE بدون احراز هویت (React)
-    mfe-base-angular/           # MFE دامنه Base (Angular)
-    mfe-sale-react/             # MFE دامنه Sale (React)
-    # در فازهای بعد:
-    # mfe-logistics-vue/
-    # mfe-hr-angular/
-    # app-shell/                # در صورت نیاز به shell مستقل
-
-  packages/
-    contracts/                  # @pol/contracts
-    api-client/                 # @pol/api-client
-    auth-core/                  # @pol/auth-core (TS خالص)
-    auth-angular/               # @pol/auth-angular (wrapper)
-    auth-react/                 # @pol/auth-react (wrapper)
-    design-tokens/              # @pol/design-tokens (tokens + CSS vars)
-    ui-core/                    # @pol/ui-core (Web Components)
-    ui-angular/                 # @pol/ui-angular (wrapper برای Angular)
-    ui-react/                   # @pol/ui-react (wrapper برای React)
-    # config های مشترک:
-    tsconfig/                   # پروفایل‌های tsconfig مشترک
-    eslint-config/              # @pol/eslint-config
+```sh
+npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
 ```
+
+## Run tasks
+
+To build the library use:
+
+```sh
+npx nx build pkg1
+```
+
+To run any task with Nx use:
+
+```sh
+npx nx <target> <project-name>
+```
+
+These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+
+[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+## Versioning and releasing
+
+To version and release the library use
+
+```
+npx nx release
+```
+
+Pass `--dry-run` to see what would happen without actually releasing the library.
+
+[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+## Keep TypeScript project references up to date
+
+Nx automatically updates TypeScript [project references](https://www.typescriptlang.org/docs/handbook/project-references.html) in `tsconfig.json` files to ensure they remain accurate based on your project dependencies (`import` or `require` statements). This sync is automatically done when running tasks such as `build` or `typecheck`, which require updated references to function correctly.
+
+To manually trigger the process to sync the project graph dependencies information to the TypeScript project references, run the following command:
+
+```sh
+npx nx sync
+```
+
+You can enforce that the TypeScript project references are always in the correct state when running in CI by adding a step to your CI job configuration that runs the following command:
+
+```sh
+npx nx sync:check
+```
+
+[Learn more about nx sync](https://nx.dev/reference/nx-commands#sync)
+
+## Set up CI!
+
+### Step 1
+
+To connect to Nx Cloud, run the following command:
+
+```sh
+npx nx connect
+```
+
+Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+
+- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+### Step 2
+
+Use the following command to configure a CI workflow for your workspace:
+
+```sh
+npx nx g ci-workflow
+```
+
+[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+## Install Nx Console
+
+Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+
+[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+## Useful links
+
+Learn more:
+
+- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
+- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+
+And join the Nx community:
+- [Discord](https://go.nx.dev/community)
+- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
+- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
+- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
