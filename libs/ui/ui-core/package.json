@@ -12,5 +12,13 @@
   "files": [
     "dist/",
     "loader/"
-  ]
+  ],
+  "scripts": {
+    "build": "stencil build",
+    "dev": "stencil build --dev --watch"
+  },
+  "devDependencies": {
+    "@stencil/core": "^4.22.0",
+    "@stencil/sass": "3.0.7"
+  }
 }

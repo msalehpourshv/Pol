@@ -1,9 +1,11 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../../dist/out-tsc",
+    "outDir": "../../../dist/libs/core/service-proxy",
     "declaration": true,
-    "types": ["node"]
+    "declarationMap": true,
+    "emitDeclarationOnly": false
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/*.spec.ts"]
 }

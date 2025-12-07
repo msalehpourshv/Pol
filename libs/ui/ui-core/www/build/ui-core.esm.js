@@ -1,0 +1,2 @@
+import{p as t,b as a}from"./p-C_EWD6UJ.js";export{s as setNonce}from"./p-C_EWD6UJ.js";import{g as r}from"./p-DQuL1Twl.js";var o=()=>{const a=import.meta.url;const r={};if(a!==""){r.resourcesUrl=new URL(".",a).href}return t(r)};o().then((async t=>{await r();return a([["p-1ea046f8",[[260,"app-button",{variant:[1]}]]],["p-83756c5a",[[257,"my-component",{first:[1],middle:[1],last:[1]}]]]],t)}));
+//# sourceMappingURL=ui-core.esm.js.map

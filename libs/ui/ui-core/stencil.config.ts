@@ -13,6 +13,7 @@ import {
 
 export const config: Config = {
   namespace: 'ui-core',
+  tsconfig: './tsconfig.json',
   taskQueue: 'async',
   sourceMap: true,
 

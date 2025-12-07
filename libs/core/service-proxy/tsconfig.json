@@ -8,7 +8,11 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noPropertyAccessFromIndexSignature": true
+    "noPropertyAccessFromIndexSignature": true,
+    "paths": {
+      "@pol/contracts": ["libs/core/contracts/src/index.ts"],
+      "@pol/service-proxy": ["libs/core/service-proxy/src/index.ts"]
+    }
   },
   "files": [],
   "include": [],

@@ -15,13 +15,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@org/service-proxy": ["libs/core/service-proxy/src/index.ts"],
       "@pol/contracts": ["libs/core/contracts/src/index.ts"],
-      "@pol/ui-core": ["dist/libs/ui/ui-core"],
+      "@pol/service-proxy": ["libs/core/service-proxy/src/index.ts"],
+      "@pol/ui-core": ["libs/ui/ui-core/dist/ui-core"],
       "@pol/ui-core-angular": ["libs/ui/ui-core-angular/src/index.ts"],
       "@pol/ui-core-react": ["libs/ui/ui-core-react/src/index.ts"],
-      "@pol/ui-core/*": ["dist/libs/ui/ui-core/dist/components/*"],
-      "@pol/ui-core/loader": ["dist/libs/ui/ui-core/loader"]
+      "@pol/ui-core/*": ["libs/ui/ui-core/src/components/*"],
+      "@pol/ui-core/loader": ["libs/ui/ui-core/loader/index.d.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

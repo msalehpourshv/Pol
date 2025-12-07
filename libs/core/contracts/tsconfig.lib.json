@@ -1,9 +1,12 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "outDir": "../../../dist/libs/core/contracts",
     "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": false,
     "types": ["node"]
   },
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/*.spec.ts"]
 }

@@ -1,0 +1,2 @@
+import{r as t,h as s}from"./p-C_EWD6UJ.js";const b=class{constructor(s){t(this,s);this.variant="primary"}render(){return s("button",{key:"9344cf6fdb47fd59f75b42d1758c8cfe0bb4fbc0",class:`btn btn-${this.variant}`},s("slot",{key:"96df535f1f5e6d084cc631dd9ceba3b9b7a558e7"}))}};export{b as app_button};
+//# sourceMappingURL=p-1ea046f8.entry.js.map

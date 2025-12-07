@@ -3,6 +3,8 @@
 import NxWelcome from './nx-welcome';
 
 import { Route, Routes, Link } from 'react-router-dom';
+import { defineCustomElements } from '@pol/ui-core/loader';
+defineCustomElements();
 
 export function App() {
   return (
